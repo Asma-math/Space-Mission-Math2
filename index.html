@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مهمة إنقاذ القمر | رائدات الوطن</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#070b26;--night:#0f1a4a;--violet:#4a2a8c;--green:#1f9d62;--white:#f6f8ff;--gold:#ffd86b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:'Tajawal',Tahoma,sans-serif;color:var(--white);background:radial-gradient(ellipse at 50% 120%,var(--violet),var(--night) 45%,var(--navy));overflow-x:hidden;overflow-y:auto;font-size:clamp(20px,3.2vw,28px)}
+#stars{position:fixed;inset:0;pointer-events:none}
+#stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.15;transform:scale(.6)}}
+.earth{position:fixed;bottom:-90px;left:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5cc8ff,#1b6fd1 45%,#0b2f7a);box-shadow:0 0 50px #3a8cff66;pointer-events:none}
+.earth:after{content:"";position:absolute;inset:30px 60px 90px 40px;border-radius:50% 40% 60% 50%;background:#2fa66a;opacity:.85}
+.moon{width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffbe8,#d9d3b8 60%,#9a947d);box-shadow:0 0 60px #fff3b855;position:relative}
+.moon:before,.moon:after{content:"";position:absolute;border-radius:50%;background:#0002}
+.moon:before{width:28px;height:28px;top:28px;right:30px}.moon:after{width:18px;height:18px;bottom:30px;left:36px}
+.planet{position:fixed;border-radius:50%;pointer-events:none;opacity:.8}
+.p1{width:54px;height:54px;top:12%;left:8%;background:radial-gradient(circle at 30% 30%,#c9a6ff,#6a3fc0);animation:fl 7s ease-in-out infinite}
+.p2{width:36px;height:36px;top:30%;right:6%;background:radial-gradient(circle at 30% 30%,#ffd1a1,#d9743c);animation:fl 9s ease-in-out infinite reverse}
+@keyframes fl{50%{transform:translateY(14px)}}
+main{position:relative;z-index:2;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 64px;text-align:center}
+.screen{display:none;width:100%;max-width:640px;flex-direction:column;align-items:center;gap:18px;animation:in .5s ease}
+.screen.on{display:flex}
+@keyframes in{from{opacity:0;transform:translateY(16px)}}
+h1{font-size:clamp(30px,6vw,48px);font-weight:900;line-height:1.3}
+.sub{color:var(--gold);font-weight:700}
+.panel{width:100%;background:#0b1240cc;border:2px solid #7f9bff55;border-radius:22px;padding:20px;box-shadow:0 0 30px #4a2a8c66,inset 0 0 20px #1f9d6222}
+input{width:100%;font:inherit;font-size:1.1em;text-align:center;padding:14px;border-radius:16px;border:3px solid var(--green);background:#fff;color:var(--navy)}
+input:focus-visible,button:focus-visible{outline:4px solid var(--gold)}
+.btn{font:inherit;font-weight:900;font-size:1.1em;min-height:64px;padding:12px 32px;border:0;border-radius:40px;color:#fff;background:linear-gradient(135deg,var(--green),#12714a);box-shadow:0 6px 0 #0b4a30,0 0 24px #1f9d6288;cursor:pointer;transition:transform .15s}
+.btn:active{transform:translateY(4px)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.hud{width:100%;display:flex;flex-direction:column;gap:10px}
+.track{display:flex;justify-content:space-between;align-items:center;position:relative}
+.st{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#1a2466;border:3px solid #7f9bff88;font-size:22px;transition:.4s}
+.st.done{background:var(--green);border-color:#9cf0c4;box-shadow:0 0 16px var(--green)}
+.st.cur{border-color:var(--gold);box-shadow:0 0 16px var(--gold);animation:pl 1.6s infinite}
+@keyframes pl{50%{transform:scale(1.12)}}
+.bar{height:20px;border-radius:12px;background:#1a2466;overflow:hidden;border:2px solid #7f9bff66}
+.bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .8s ease}
+.lab{font-size:.7em;opacity:.9;display:flex;justify-content:space-between}
+.eq{display:flex;justify-content:center;align-items:center;gap:.4em;font-size:clamp(48px,12vw,80px);font-weight:900;direction:rtl;margin:6px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+.opt{font:inherit;font-weight:900;font-size:1.5em;min-height:78px;border-radius:20px;border:3px solid #9fb4ff;background:linear-gradient(160deg,#27368f,#18215f);color:#fff;cursor:pointer;transition:.2s}
+.opt:active{transform:scale(.96)}
+.opt.ok{background:linear-gradient(160deg,#25b774,#12714a);border-color:#b6ffd9;box-shadow:0 0 28px #25b774;animation:pop .5s}
+.opt.bad{background:#3a2a5c;border-color:#8a6cc0;opacity:.55}
+@keyframes pop{50%{transform:scale(1.1)}}
+.fb{min-height:3.2em;font-weight:700;line-height:1.6;font-size:.95em}
+.fb.good{color:#9cf0c4}.fb.hint{color:var(--gold)}
+.ship{font-size:70px;filter:drop-shadow(0 0 16px #fff6);animation:fl 3s ease-in-out infinite}
+.score{font-size:clamp(54px,14vw,90px);font-weight:900;color:var(--gold)}
+.flight{position:relative;height:210px;width:100%}
+.flight .moon{position:absolute;top:0;left:50%;margin-left:-65px}
+.flight .ship{position:absolute;bottom:0;left:50%;margin-left:-35px;animation:land 3s ease-out forwards}
+@keyframes land{to{bottom:110px;transform:scale(.6)}}
+footer{position:fixed;bottom:0;left:0;right:0;z-index:3;padding:10px;text-align:center;font-size:.7em;font-weight:700;background:#070b26cc;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.conf{position:fixed;top:-20px;width:10px;height:16px;z-index:5;pointer-events:none;animation:cf linear forwards}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="stars"></div><div class="planet p1"></div><div class="planet p2"></div><div class="earth"></div>
+<main>
+<section class="screen on" id="s0">
+ <div class="moon"></div>
+ <div class="ship">🚀</div>
+ <h1>مهمة إنقاذ القمر</h1>
+ <p class="sub">رائدات الوطن</p>
+ <div class="panel">
+  <p style="margin-bottom:12px">رائدة الوطن، هل أنتِ مستعدة؟<br>هناك مهمة عاجلة لإنقاذ القمر!</p>
+  <input id="nm" placeholder="اكتبي اسمك هنا" maxlength="20" autocomplete="off" aria-label="اسم الرائدة">
+ </div>
+ <button class="btn" id="go">🚀 انطلاق المهمة</button>
+ <p class="sub" style="font-size:.85em">من أرض الوطن… إلى أبعد النجوم 🚀🇸🇦</p>
+</section>
+
+<section class="screen" id="s1">
+ <div class="hud">
+  <div class="track" id="tr"></div>
+  <div class="lab"><span>⚡ طاقة المركبة</span><span id="pc">٠٪</span></div>
+  <div class="bar"><b id="en"></b></div>
+ </div>
+ <div class="panel">
+  <p class="sub" id="mt"></p>
+  <p style="font-size:.8em;margin-top:4px">اختاري الإجابة الصحيحة</p>
+  <div class="eq" id="eq"></div>
+  <div class="opts" id="op"></div>
+  <p class="fb" id="fb" aria-live="polite"></p>
+ </div>
+ <button class="btn" id="nx" disabled>🚀 المهمة التالية</button>
+</section>
+
+<section class="screen" id="s2">
+ <div class="flight"><div class="moon"></div><div class="ship">🚀</div></div>
+ <h1 id="rt"></h1>
+ <div class="score" id="sc"></div>
+ <div class="panel" id="rm"></div>
+ <button class="btn" id="rs">🔄 إعادة المهمة</button>
+ <p class="sub" style="font-size:.85em">من أرض الوطن… إلى أبعد النجوم 🚀🇸🇦</p>
+</section>
+</main>
+<footer>معلمة الرياضيات أسماء آل عثمان</footer>
+
+<script>
+const D='٠١٢٣٤٥٦٧٨٩',ar=n=>String(n).replace(/\d/g,d=>D[d]);
+const Q=[
+{t:'المهمة الأولى – تشغيل المحرك 🚀',i:'🚀',a:'٧٤',b:'٣٢',o:['٣٢','٤٢','٤٨','٥٢'],c:'٤٢',ok:'✨ أحسنتِ! إجابة صحيحة، تم تشغيل محرك المركبة 🚀',no:'🌟 حاولي مرة أخرى، تذكري أن نطرح الآحاد أولًا ثم العشرات.'},
+{t:'المهمة الثانية – عبور البوابة الفضائية 🌌',i:'🌌',a:'٨٦',b:'٤٥',o:['٣١','٤١','٤٥','٥١'],c:'٤١',ok:'⭐ رائع! فتحتِ البوابة الفضائية وواصلتِ الرحلة.',no:'💫 تلميح: ابدئي من الآحاد: ٦ − ٥، ثم انتقلي إلى العشرات.'},
+{t:'المهمة الثالثة – إنقاذ القمر 🌕',i:'🌕',a:'٩٣',b:'٥٧',o:['٣٦','٤٦','٣٤','٤٢'],c:'٣٦',ok:'🌕✨ مذهل! نجحتِ في إنقاذ القمر والوصول إلى نهاية المهمة!',no:'🚀 تلميح: نحتاج إلى الاستلاف لأن ٣ أصغر من ٧ في الآحاد.'}
+];
+const $=id=>document.getElementById(id);
+let cur=0,score=0,tried=false,name='';
+// stars
+for(let i=0;i<70;i++){const s=document.createElement('i');s.style.cssText=`top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;opacity:${.4+Math.random()*.6}`;$('stars').appendChild(s)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0)}
+function track(){$('tr').innerHTML=Q.map((q,i)=>`<div class="st ${i<cur?'done':i===cur?'cur':''}">${i<cur?'✅':q.i}</div>`).join('<span style="flex:1;height:4px;background:#7f9bff44;margin:0 6px"></span>');
+ const p=Math.round(cur/3*100);$('en').style.width=p+'%';$('pc').textContent=ar(p)+'٪'}
+function load(){
+ const q=Q[cur];tried=false;track();
+ $('mt').textContent=q.t;
+ $('eq').innerHTML=`<span>${q.a}</span><span>−</span><span>${q.b}</span><span>=</span><span>؟</span>`;
+ $('fb').textContent='';$('fb').className='fb';$('nx').disabled=true;
+ $('nx').textContent=cur===2?'🌕 نتيجة المهمة':'🚀 المهمة التالية';
+ $('op').innerHTML='';
+ q.o.forEach(v=>{const b=document.createElement('button');b.className='opt';b.textContent=v;b.onclick=()=>pick(b,v);$('op').appendChild(b)});
+}
+function pick(b,v){
+ const q=Q[cur];
+ if(v===q.c){
+  if(!tried)score++;
+  b.classList.add('ok');document.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+  $('fb').textContent=q.ok;$('fb').className='fb good';$('nx').disabled=false;
+  const p=Math.round((cur+1)/3*100);$('en').style.width=p+'%';$('pc').textContent=ar(p)+'٪';
+  burst(14);
+ }else{
+  tried=true;b.classList.add('bad');b.disabled=true;
+  $('fb').textContent=q.no;$('fb').className='fb hint';
+ }
+}
+function burst(n){const c=['#ffd86b','#1f9d62','#fff','#b79bff','#6cc4ff'];
+ for(let i=0;i<n;i++){const e=document.createElement('div');e.className='conf';
+  e.style.cssText=`left:${Math.random()*100}%;background:${c[i%5]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.5}s;border-radius:${i%2?'50%':'2px'}`;
+  document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}}
+function finish(){
+ const n=name;let t,m;
+ if(score===3){t='🌟 رائدة فضاء متميزة!';m=`أبدعتِ يا ${n}، أكملتِ جميع المهمات بنجاح ووصلتِ إلى القمر!`}
+ else if(score===2){t='⭐ إنجاز رائع!';m=`أحسنتِ يا ${n}، اقتربتِ كثيرًا من إكمال المهمة. راجعي خطوات الطرح وحاولي مرة أخرى.`}
+ else{t='🚀 رائدة لا تستسلم!';m='كل محاولة تقرّبكِ من النجاح. راجعي الآحاد والعشرات وانطلقي من جديد!'}
+ $('rt').textContent=t;$('sc').textContent=`${ar(score)} / ٣`;
+ $('rm').innerHTML=`<p class="sub">الرائدة ${n}</p><p style="margin-top:8px;line-height:1.7">${m}</p>`;
+ const sh=document.querySelector('#s2 .ship');sh.style.animation='none';sh.offsetWidth;sh.style.animation='';
+ show('s2');burst(score===3?90:score===2?60:30);
+}
+$('go').onclick=()=>{name=$('nm').value.trim()||'رائدة الوطن';cur=0;score=0;show('s1');load()};
+$('nm').onkeydown=e=>{if(e.key==='Enter')$('go').click()};
+$('nx').onclick=()=>{cur++;if(cur>=3){cur=3;track();finish()}else load()};
+$('rs').onclick=()=>{$('nm').value='';show('s0')};
+</script>
+</body>
+</html>
